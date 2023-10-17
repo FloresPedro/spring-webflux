@@ -17,7 +17,7 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/api/productos")
 public class ProductoRestController {
-
+	
 	@Autowired
 	private IProductoDao dao;
 
@@ -38,7 +38,7 @@ public class ProductoRestController {
 		// Mono<Producto> producto = dao.findById(id); // la forma mas facil incluso
 		// haciendo: return dao.findById
 		Flux<Producto> productos = dao.findAll();// recuperamos todos y despues filtramos
-		Mono<Producto> producto = productos.filter(p -> p.getId().equals(id)).next()
+		Mono<Producto> producto = productos.filter(p -> p.getId().equals(id)).next() //con next convertimos un flux a un mono
 				.doOnNext(prod -> log.info(prod.getNombre()));
 		return producto;
 	}
